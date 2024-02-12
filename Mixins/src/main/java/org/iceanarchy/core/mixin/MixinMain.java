@@ -2,11 +2,12 @@ package org.iceanarchy.core.mixin;
 
 import lombok.Getter;
 import me.txmc.rtmixin.RtMixin;
-import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.iceanarchy.core.mixin.mixins.MixinEndCrystal;
-import org.iceanarchy.core.mixin.mixins.MixinMinecraftServer;
-import org.iceanarchy.core.mixin.mixins.MixinWorld;
+import org.iceanarchy.core.mixin.mixins.MixinEntityMinecart;
+import org.iceanarchy.core.mixin.mixins.MixinEntityPlayer;
+
+import com.diogonunes.jcolor.Attribute;
+import static com.diogonunes.jcolor.Ansi.colorize;
 
 import java.lang.instrument.Instrumentation;
 
@@ -21,19 +22,16 @@ public class MixinMain {
     public void init(JavaPlugin plugin) throws Throwable {
         instance = this;
         this.javaPlugin = plugin;
-        plugin.getLogger().info(translate("&3Initializing mixins"));
+        plugin.getServer().getLogger().info(colorize("Initializing mixins...", Attribute.GREEN_TEXT(), Attribute.BOLD()));
         Instrumentation inst = RtMixin.attachAgent().orElseThrow(() -> new RuntimeException("Failed to attach agent"));
-        plugin.getLogger().info(translate("&3Successfully attached agent and got instrumentation instance&r&a %s&r", inst.getClass().getName()));
+        plugin.getServer().getLogger().info(colorize(String.format("Successfully attached agent and got instrumentation instance: %s!", inst.getClass().getName()), Attribute.GREEN_TEXT(), Attribute.BOLD()));
         long start = System.currentTimeMillis();
         //Register your mixins here
-        RtMixin.processMixins(MixinEndCrystal.class);
-        RtMixin.processMixins(MixinMinecraftServer.class);
-        RtMixin.processMixins(MixinWorld.class);
+        RtMixin.processMixins(MixinEntityPlayer.class);
+        RtMixin.processMixins(MixinEntityMinecart.class);
+//        RtMixin.processMixins(MixinMinecraftServer.class);
+//        RtMixin.processMixins(MixinWorld.class);
         //---
-        plugin.getLogger().info(translate("&3Preformed all mixins in&r&a %dms&r", (System.currentTimeMillis() - start)));
-    }
-
-    private String translate(String message, Object... args) {
-        return ChatColor.translateAlternateColorCodes('&', String.format(message, args));
+        plugin.getServer().getLogger().info(colorize(String.format("Preformed all mixins in: %dms!", (System.currentTimeMillis() - start)), Attribute.GREEN_TEXT(), Attribute.BOLD()));
     }
 }

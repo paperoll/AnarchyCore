@@ -16,9 +16,9 @@ repositories {
 }
 
 dependencies {
-    implementation("me.txmc:protocolapi:1.2-SNAPSHOT")
+    implementation("com.diogonunes:JColor:5.5.1")
     implementation(project(":Common"))
-    compileOnly("com.destroystokyo.paper:paper-jar:1.12.2-R0.1-SNAPSHOT")
+    compileOnly(files("../libs/uberbukkit.jar"))
     compileOnly("org.projectlombok:lombok:1.18.22")
     annotationProcessor("org.projectlombok:lombok:1.18.24")
 }

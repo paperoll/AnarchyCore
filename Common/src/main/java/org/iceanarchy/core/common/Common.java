@@ -1,16 +1,12 @@
 package org.iceanarchy.core.common;
 
-import io.netty.channel.ChannelPipeline;
-import net.minecraft.server.v1_12_R1.ChatComponentText;
-import net.minecraft.server.v1_12_R1.PacketPlayOutChat;
+import net.minecraft.server.Packet3Chat;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_12_R1.CraftServer;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.util.NumberConversions;
 import org.iceanarchy.core.common.boiler.interfaces.ScheduledTask;
 
 import java.lang.reflect.Method;
@@ -40,10 +36,6 @@ public class Common {
         }
     }
 
-    public static double getTPS() {
-        return ((CraftServer) Bukkit.getServer()).getHandle().getServer().recentTps[0];
-    }
-
     public static void registerTasks(JavaPlugin plugin, Class<?>... classes) {
         for (Class<?> clazz : classes) {
             for (Method method : clazz.getDeclaredMethods()) {
@@ -55,7 +47,7 @@ public class Common {
     }
 
     private static void invokeMethod(Method method, JavaPlugin plugin) {
-        Bukkit.getScheduler().runTask(plugin, () -> {
+        Bukkit.getScheduler().scheduleAsyncDelayedTask(plugin, () -> {
             try {
                 method.invoke(null);
             } catch (Throwable t) {
@@ -75,11 +67,11 @@ public class Common {
     }
 
     public static void sendChatPacket(Player player, String data) {
-        ((CraftPlayer) player).getHandle().playerConnection.networkManager.channel.writeAndFlush(new PacketPlayOutChat(new ChatComponentText(translateAltColorCodes(data))));
+        ((CraftPlayer) player).getHandle().netServerHandler.sendPacket(new Packet3Chat(translateAltColorCodes(data)));
     }
 
     public static String translateAltColorCodes(String input) {
-        return ChatColor.translateAlternateColorCodes('&', input);
+        return doCharCodeThing('&', input);
     }
 
     public static int getBlocksAwayFrom(org.bukkit.entity.Entity entity, org.bukkit.entity.Entity target) {
@@ -90,7 +82,21 @@ public class Common {
     }
 
     public static int getBlocksAwayFrom(Location location1, Location location2) {
-        return (int) Math.sqrt((NumberConversions.square(location1.getBlockX() - location2.getBlockX()) + NumberConversions.square(location1.getBlockZ() - location2.getBlockZ())));
+        return (int) Math.sqrt((Math.sqrt(location1.getBlockX() - location2.getBlockX()) + Math.sqrt(location1.getBlockZ() - location2.getBlockZ())));
+    }
+
+    private static String doCharCodeThing(char altColorChar, String textToTranslate)
+    {
+        char[] b = textToTranslate.toCharArray();
+        for (int i = 0; i < b.length - 1; i++)
+        {
+            if (b[i] == altColorChar && "0123456789AaBbCcDdEeFfKkLlMmNnOoRr".indexOf(b[i + 1]) > -1)
+            {
+                b[i] = '\u00A7';
+                b[i + 1] = Character.toLowerCase(b[i + 1]);
+            }
+        }
+        return new String(b);
     }
 }
 

@@ -13,7 +13,8 @@ repositories {
 }
 
 dependencies {
-    compileOnly("com.destroystokyo.paper:paper-jar:1.12.2-R0.1-SNAPSHOT")
+    compileOnly(files("../libs/uberbukkit.jar"))
     compileOnly("org.projectlombok:lombok:1.18.24")
+    compileOnly("com.diogonunes:JColor:5.5.1")
     annotationProcessor("org.projectlombok:lombok:1.18.24")
 }

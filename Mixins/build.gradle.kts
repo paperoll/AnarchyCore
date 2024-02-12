@@ -16,8 +16,9 @@ repositories {
 dependencies {
     implementation("me.txmc:rtmixin:1.5.6-BETA")
     implementation(project(":Common"))
-    compileOnly("com.destroystokyo.paper:paper-jar:1.12.2-R0.1-SNAPSHOT")
+    compileOnly(files("../libs/uberbukkit.jar"))
     compileOnly("org.projectlombok:lombok:1.18.24")
+    implementation("com.diogonunes:JColor:5.5.1")
     annotationProcessor("org.projectlombok:lombok:1.18.24")
 }
 tasks.shadowJar {
