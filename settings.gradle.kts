@@ -1,4 +1,4 @@
-rootProject.name = "IceAnarchyCore"
+rootProject.name = "AnarchyCore"
 
 include(":Common", ":Mixins", ":Plugin")
 

@@ -1,0 +1,76 @@
+StatsInfo:
+  day: 7
+  month: 2 # january = 0, december = 11
+  year: 2021
+
+StatsMessage:
+  - "&f---------------------------------"
+  - "&c%totalPlayers% &7unique players have connected."
+  - "&7The map is &c%years% years &7and &c%months% months &7old."
+  - "&7The world size is &c%fileSize% &7gb."
+  - "&f---------------------------------"
+
+ListMessage: "&7There are currently &f%player_count% &7players online: &f%player_list%"
+
+HelpMessage: "&c/%command% &r- &7 %description%"
+
+FirstJoinerMessage:
+  - "&7Welcome to &cFireHack!"
+  - "&7Discord: &cdiscord.gg/xbFGAsKvkn"
+  - "&7Website: &chttps://www.firehack.us/"
+  - "&7Type &c/help &7for more commands!"
+
+Patches:
+  VehiclesPerChunk: 20
+  IllegalsPatch:
+    Enabled: true
+    Log: true
+    Infinites: true
+    Durability: true
+    Ids:
+      - 7
+      - 8
+      - 9
+      - 10
+      - 11
+      - 16
+      - 19
+      - 21
+      - 26
+      - 30
+      - 31
+      - 32
+      - 34
+      - 36
+      - 43
+      - 51
+      - 52
+      - 55
+      - 56
+      - 59
+      - 60
+      - 62
+      - 63
+      - 64
+      - 68
+      - 71
+      - 73
+      - 74
+      - 75
+      - 78
+      - 79
+      - 83
+      - 90
+      - 92
+      - 93
+      - 94
+      - 95
+      - 302
+      - 303
+      - 304
+      - 305
+  MinecartDupePatch: true
+  SpawnTPPatch: false
+  NoFallPatch: true
+  NetherRoofPatch: true
+  NCBypassPatch: True

@@ -1,4 +1,4 @@
-group = "org.iceanarchy"
+group = "org.wksh"
 version = "1.0-SNAPSHOT"
 description = ""
 
@@ -13,14 +13,14 @@ repositories {
     mavenLocal()
     mavenCentral()
     maven { url = uri("https://repo.txmc.me/releases") }
+    maven { url = uri("https://repo.wksh.org/releases") }
 }
 
 dependencies {
     implementation("com.diogonunes:JColor:5.5.1")
     implementation(project(":Common"))
-    compileOnly(files("../libs/uberbukkit.jar"))
-    compileOnly("org.projectlombok:lombok:1.18.22")
-    annotationProcessor("org.projectlombok:lombok:1.18.24")
+    compileOnly("pl.moresteck:uberbukkit:1.0")
+    implementation("github.scarsz:configuralize:1.4.0")
 }
 
 tasks.processResources {
@@ -28,6 +28,7 @@ tasks.processResources {
     val resources = File("src/main/resources")
     from("META-INF").exclude("maven/*")
     from(resources).include("*")
+    from(resources).include("config/*")
 }
 
 tasks.shadowJar {

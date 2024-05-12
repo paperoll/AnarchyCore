@@ -1,4 +1,4 @@
-name: IceAnarchyCore
+name: AnarchyCore
 version: 1.0-SNAPSHOT
-main: org.iceanarchy.core.IceAnarchy
-authors: [ SevJ6 ]
+main: org.wksh.core.AnarchyCore
+authors: [ SevJ6, WKSH ]

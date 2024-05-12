@@ -3,7 +3,7 @@ plugins {
     id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
-group = "org.iceanarchy"
+group = "org.wksh"
 version = "1.0-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
@@ -11,15 +11,14 @@ repositories {
     mavenLocal()
     mavenCentral()
     maven { url = uri("https://repo.txmc.me/releases") }
+    maven { url = uri("https://repo.wksh.org/releases") }
 }
 
 dependencies {
     implementation("me.txmc:rtmixin:1.5.6-BETA")
     implementation(project(":Common"))
-    compileOnly(files("../libs/uberbukkit.jar"))
-    compileOnly("org.projectlombok:lombok:1.18.24")
+    compileOnly("pl.moresteck:uberbukkit:1.0")
     implementation("com.diogonunes:JColor:5.5.1")
-    annotationProcessor("org.projectlombok:lombok:1.18.24")
 }
 tasks.shadowJar {
     manifest {
