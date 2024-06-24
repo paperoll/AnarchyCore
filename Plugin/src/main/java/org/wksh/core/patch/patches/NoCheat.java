@@ -20,7 +20,7 @@ public class NoCheat implements Listener
             if (packet.animation == 3)
             {
                 Player player = Bukkit.getPlayer(event.getUsername());
-                if (player.hasBed())
+                if (player.hasBed() && player.getBedLocation().distance(player.getLocation()) < 5)
                     return;
 
                 event.setCancelled(true);
