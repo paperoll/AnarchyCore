@@ -196,13 +196,17 @@ public class Illegals implements Listener
         }
     }
 
+    /**
+     * had to make it so pork is whitelisted with 1-3 values, false flagged when pigs dropped <1 porkchops on death.
+     */
     @EventHandler(priority = Event.Priority.Monitor)
     public void onPlayerPickupItem(PlayerPickupItemEvent event)
     {
         if (illegalIds.contains(event.getItem().getItemStack().getType().getId()) ||
                 (checkDurability && event.getItem().getItemStack().getType().getMaxDurability() > 0 && event.getItem().getItemStack().getDurability() > event.getItem().getItemStack().getType().getMaxDurability()) ||
                 (checkDurability && event.getItem().getItemStack().getDurability() < 0) ||
-                (checkInfinites && (event.getItem().getItemStack().getAmount() > event.getItem().getItemStack().getMaxStackSize() || event.getItem().getItemStack().getAmount() <= 0)))
+                (checkInfinites && ((event.getItem().getItemStack().getType() == Material.PORK && (event.getItem().getItemStack().getAmount() > 3 || event.getItem().getItemStack().getAmount() <= 0)) ||
+                        (event.getItem().getItemStack().getType() != Material.PORK && (event.getItem().getItemStack().getAmount() > event.getItem().getItemStack().getMaxStackSize() || event.getItem().getItemStack().getAmount() <= 0)))))
         {
             this.log("Prevented a player from picking up {}x{} at {}!", event.getItem().getItemStack().getAmount(), event.getItem().getItemStack().getType(), event.getPlayer().getLocation());
             event.getItem().setFireTicks(20);
