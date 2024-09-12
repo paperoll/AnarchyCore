@@ -134,16 +134,6 @@ public class Illegals implements Listener
     }
 
     @EventHandler(priority = Event.Priority.Monitor)
-    public void onFurnaceSmelt(FurnaceSmeltEvent event)
-    {
-        if (checkInfinites && event.getSource().getAmount() <= 0)
-        {
-            event.getSource().setAmount(1);
-            this.log("Prevented furnace from using infinite item as fuel at {}!", event.getFurnace().getLocation());
-        }
-    }
-
-    @EventHandler(priority = Event.Priority.Monitor)
     public void onFurnaceBurn(FurnaceBurnEvent event)
     {
         if (checkInfinites && event.isBurning() && event.getFuel().getAmount() <= 0)
@@ -211,30 +201,6 @@ public class Illegals implements Listener
             this.log("Prevented a player from picking up {}x{} at {}!", event.getItem().getItemStack().getAmount(), event.getItem().getItemStack().getType(), event.getPlayer().getLocation());
             event.getItem().setFireTicks(20);
             event.setCancelled(true);
-        }
-    }
-
-    @EventHandler(priority = Event.Priority.Monitor)
-    public void onPacket(PlayerSendPacketEvent event)
-    {
-        CraftPlayer player = ((CraftPlayer) Bukkit.getPlayer(event.getUsername()));
-
-        if (event.getPacket() instanceof Packet100OpenWindow)
-        {
-            // removes illegals from the players inventory when they open any container except their inventory
-            this.checkInventory(player.getInventory(), player.getHandle().activeContainer.toString(), player.getLocation().toString());
-        }
-    }
-
-    @EventHandler(priority = Event.Priority.Monitor)
-    public void onPacket(PlayerReceivePacketEvent event)
-    {
-        CraftPlayer player = ((CraftPlayer) Bukkit.getPlayer(event.getUsername()));
-
-        if (event.getPacket() instanceof Packet101CloseWindow)
-        {
-            // removes illegals from the player's inventory on close since I couldn't find a place to add it to inventory event
-            this.checkInventory(player.getInventory(), player.getHandle().activeContainer.toString(), player.getLocation().toString());
         }
     }
 

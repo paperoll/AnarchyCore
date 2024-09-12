@@ -31,7 +31,7 @@ public class ListCommand implements ICommandExecutor
         String listMessage = AnarchyCore.plugin().configManager().config().getString("ListMessage");
 
         String formattedMessage = listMessage
-                .replace("%player_count%", String.valueOf(playerCount))
+                .replace("%player_count%", playerCount == 1 ? "1 player" : playerCount + " players")
                 .replace("%player_list%", playerList);
 
         Common.sendMessage(sender, formattedMessage);
