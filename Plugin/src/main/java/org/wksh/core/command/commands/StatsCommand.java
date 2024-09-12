@@ -14,8 +14,6 @@ import java.util.stream.Stream;
 
 public class StatsCommand implements ICommandExecutor
 {
-    private static final DecimalFormat decimalFormat = new DecimalFormat("#.##");
-
     @Override
     public String description()
     {
@@ -50,7 +48,7 @@ public class StatsCommand implements ICommandExecutor
                         .replace("%years%", String.valueOf(Math.max(current.get(Calendar.YEAR) - configDate.get(Calendar.YEAR), 0)))
                         .replace("%months%", String.valueOf(Math.max(current.get(Calendar.MONTH) - configDate.get(Calendar.MONTH), 0)))
                         .replace("%days%", String.valueOf(Math.max(current.get(Calendar.DAY_OF_MONTH) - configDate.get(Calendar.DAY_OF_MONTH), 0)))
-                        .replace("%fileSize%", decimalFormat.format(fileSize))
+                        .replace("%fileSize%", new DecimalFormat("#.##").format(fileSize))
                         .replace("%totalPlayers%", String.valueOf(Objects.requireNonNull(new File("world/players/").listFiles()).length));
 
                 Common.sendMessage(sender, formattedMessage);
